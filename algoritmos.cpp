@@ -63,3 +63,37 @@ void MotorImagen::aplicarFiltroMediana() {
         }
     }
 }
+void MotorImagen::clasificarZonasDeforestadas() {
+    int pixelesBosque = 0;
+    int pixelesDeforestados = 0;
+    
+    for (int i = 0; i < filas; ++i) {
+        for (int j = 0; j < columnas; ++j) {
+            Pixel* p = *(matriz + i) + j;
+            
+            // Si el componente Verde (G) es mayor que el Rojo y Azul, es bosque
+            if (p->g > p->r && p->g > p->b) {
+                pixelesBosque++;
+            } else if (p->r > p->g && p->r > 50) { 
+                // Si predomina el Rojo/Marrón, está deforestado o quemado
+                pixelesDeforestados++;
+                
+                // Pintamos la zona crítica de un color rojo intenso para el reporte visual
+                p->r = 255; p->g = 0; p->b = 0;
+            }
+        }
+    }
+    
+    // Mostrar estadísticas en consola (Rúbrica)
+    float total = pixelesBosque + pixelesDeforestados;
+    float porcentajeAlerta = (pixelesDeforestados / total) * 100;
+    
+    std::cout << "--- REPORTE DE CLASIFICACIÓN SATELITAL ---" << std::endl;
+    std::cout << "Zonas de Bosque Saludable: " << pixelesBosque << " px." << std::endl;
+    std::cout << "Zonas con Alerta de Deforestación: " << pixelesDeforestados << " px." << std::endl;
+    std::cout << "Porcentaje de daño territorial: " << porcentajeAlerta << "%" << std::endl;
+    
+    if(porcentajeAlerta > 15.0) {
+        std::cout << "[ALERTA CRÍTICA]: Se sugiere intervención en la zona." << std::endl;
+    }
+}
