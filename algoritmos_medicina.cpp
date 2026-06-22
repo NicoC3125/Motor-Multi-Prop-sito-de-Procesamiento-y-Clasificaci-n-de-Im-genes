@@ -1,4 +1,4 @@
-#include "MotorImagen.h"
+#include "MOTOR_IMAGEN_H.h"
 #include <iostream>
 
 // Binarizar para resaltar áreas sospechosas (oscuras)

@@ -1,4 +1,4 @@
-#include "MotorImagen.h"
+#include "MOTOR_IMAGEN_H.h"
 #include <iostream>
 
 // Filtro básico para convertir a Escala de Grises (Aritmética de punteros)

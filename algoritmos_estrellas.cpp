@@ -1,4 +1,4 @@
-#include "MotorImagen.h"
+#include "MOTOR_IMAGEN_H.h"
 #include <iostream>
 
 // Binarizar el espacio: Estrellas en blanco (255), vacío en negro (0)
