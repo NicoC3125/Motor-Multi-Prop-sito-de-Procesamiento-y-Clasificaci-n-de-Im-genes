@@ -1,4 +1,4 @@
-#include "MOTOR_IMAGEN_H.h"
+#include "../include/MotorImagen.h"
 #include <iostream>
 
 void MotorImagen::aislarEstrellas(int brilloMinimo) {
