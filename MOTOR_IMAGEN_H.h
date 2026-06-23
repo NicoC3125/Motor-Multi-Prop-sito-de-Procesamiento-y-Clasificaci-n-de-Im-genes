@@ -11,7 +11,7 @@ struct Pixel {
     unsigned char r, g, b;
     //constructores
     Pixel(): r(0), g(0), b(0) {}
-    Pixel(int rojo, int cerde, int azul): r(rojo), g(cerde), b(azul) {}
+    Pixel(int rojo, int verde, int azul): r(rojo), g(verde), b(azul) {}
     //Métodos auxiliares
     int getGris() const {
         return (r+g+b) / 3; 
@@ -69,5 +69,17 @@ void generarHistograma() const;
 //Métodos de utilidad
 bool validarCoordenadas(int fila, int col) const;
 void estableccerTipoImagen(const std::string& tipo);
+//funciones extra para los cambios necesarios
+void aplicarFiltroMediana();     
+ // Módulo Deforestación
+ void convertirEscalaGrises();
+void clasificarZonasDeforestadas();
+
+// Módulo Estrellas
+void aislarEstrellas(int brilloMinimo);
+void clasificarCumuloEstelar();
+// Módulo Medicina
+void binarizarParaAnomalias(int umbralMaximo);
+void clasificarAnomaliaMedica();
 };
 #endif
