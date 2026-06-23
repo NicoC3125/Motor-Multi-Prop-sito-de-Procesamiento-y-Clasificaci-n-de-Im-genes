@@ -11,7 +11,7 @@ void MotorImagen::convertirEscalaGrises() {
     }
 }
 
-// Función auxiliar de ordenamiento (Solo vive en este archivo .cpp)
+// Función auxiliar de ordenamiento
 void ordenarArreglo(int arr[], int n) {
     for (int i = 0; i < n - 1; ++i) {
         int minIdx = i;
