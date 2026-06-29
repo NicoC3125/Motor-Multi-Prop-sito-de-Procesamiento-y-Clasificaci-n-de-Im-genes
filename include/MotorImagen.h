@@ -6,13 +6,12 @@
 #include <fstream>
 #include <limits>
 #include <cstring>
-//Estructura Pixel con soporte RGB(para imagenes satelitales y médicas)
 struct Pixel {
     unsigned char r, g, b;
     //constructores
     Pixel(): r(0), g(0), b(0) {}
     Pixel(int rojo, int verde, int azul): r(rojo), g(verde), b(azul) {}
-    //Métodos auxiliares
+    
     int getGris() const {
         return (r+g+b) / 3; 
     }
@@ -29,7 +28,6 @@ struct Pixel {
 //Clase principal del Motor de Imágenes
 class MotorImagen {
     private:
-    // Atributos Privados
     std::string nombreArchivo; // Nombre del archivo cargado
     int filas; //"alto"
     int columnas; //"ancho"
@@ -69,12 +67,11 @@ void generarHistograma() const;
 //Métodos de utilidad
 bool validarCoordenadas(int fila, int col) const;
 void estableccerTipoImagen(const std::string& tipo);
-//funciones extra para los cambios necesarios
+//funciones extra para cuando agregamos la fucncion de estrellas
 void aplicarFiltroMediana();     
  // Módulo Deforestación
  void convertirEscalaGrises();
 void clasificarZonasDeforestadas();
-
 // Módulo Estrellas
 void aislarEstrellas(int brilloMinimo);
 void clasificarCumuloEstelar();
