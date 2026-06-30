@@ -1,8 +1,7 @@
 CXX = g++
 CXXFLAGS = -Wall -Wextra -std=c++11 -I.
 TARGET = motor_imagen
-SRCS = main.cpp infraestructura.cpp algoritmos_deforestacion.cpp algoritmos_estrellas.cpp algoritmos_medicina.cpp
-OBJS = $(SRCS:.cpp=.o)
+SRCS = main.cpp src/infraestructura.cpp src/algoritmos_deforestacion.cpp src/algoritmos_estrellas.cpp src/algoritmos_medicina.cppOBJS = $(SRCS:.cpp=.o)
 
 all: $(TARGET)
 
