@@ -5,7 +5,7 @@ void MotorImagen::convertirEscalaGrises() {
     for (int i = 0; i < filas; ++i) {
         for (int j = 0; j < columnas; ++j) {
             Pixel* pixelActual = *(matrizPixeles + i) + j;
-            int promedio = pixelActual->getGris(); // Usamos tu método inline del struct
+            int promedio = pixelActual->getGris();
             pixelActual->setGris(promedio);
         }
     }
@@ -56,8 +56,8 @@ void MotorImagen::clasificarZonasDeforestadas() {
         }
     }
     
-    float total = pixelesBosque + pixelesDeforestados;
-    float porcentajeAlerta = (total > 0) ? (pixelesDeforestados / total) * 100 : 0;
+    float totalImagen = filas * columnas;
+    float porcentajeAlerta = (totalImagen > 0) ? ((float)pixelesDeforestados / totalImagen) * 100 : 0;
     
     std::cout << "--- REPORTE DE CLASIFICACIÓN SATELITAL ---" << std::endl;
     std::cout << "Zonas de Bosque Saludable: " << pixelesBosque << " px." << std::endl;
