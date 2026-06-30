@@ -2,7 +2,7 @@
 #include <fstream>
 #include <iostream>
 
-MotorImagen::MotorImagen() : matrizPixeles(nullptr), filas(0), columnas(0), maxValor(255), imagenCargada(false) {}
+MotorImagen::MotorImagen() : filas(0), columnas(0), maxValor(255), matrizPixeles(nullptr), imagenCargada(false) {}
 
 MotorImagen::~MotorImagen() {
     if (matrizPixeles != nullptr) {
