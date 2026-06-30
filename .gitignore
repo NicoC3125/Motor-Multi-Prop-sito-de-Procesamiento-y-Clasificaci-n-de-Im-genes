@@ -4,3 +4,4 @@
 *.app
 *.log
 *.tmp
+imagenes/*.ppm
