@@ -41,8 +41,11 @@ bool MotorImagen::cargarImagenPPM(const std::string& ruta) {
         for (int j = 0; j < columnas; ++j) {
             int r, g, b;
             archivo >> r >> g >> b;
-            matrizPixeles[i][j] = Pixel(r, g, b);
-        }
+            Pixel* p = *(matrizPixeles + i) + j;
+            p->r = r;
+            p->g = g;
+            p->b = b;
+     }
     }
     imagenCargada = true;
     tipoImagen = "PPM";
