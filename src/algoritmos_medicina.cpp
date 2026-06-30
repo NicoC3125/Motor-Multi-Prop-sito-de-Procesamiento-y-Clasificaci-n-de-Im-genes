@@ -4,13 +4,14 @@
 void MotorImagen::binarizarParaAnomalias(int umbralMaximo) {
     for (int i = 0; i < filas; ++i) {
         for (int j = 0; j < columnas; ++j) {
-            Pixel* p = *(matrizPixeles + i) + j;
-            int gris = p->getGris();
-            
-            if (gris < umbralMaximo) {
-                p->r = 255; p->g = 255; p->b = 255;
-            } else {
-                p->r = 0; p->g = 0; p->b = 0;
+            Pixel* p = matrizPixeles(i, j);
+            if (p != nullptr) {
+                int gris = p->getGris();
+                if (gris < umbralMaximo) {
+                    p->r = 255; p->g = 255; p->b = 255;
+                } else {
+                    p->r = 0; p->g = 0; p->b = 0;
+                }
             }
         }
     }
@@ -22,9 +23,11 @@ void MotorImagen::clasificarAnomaliaMedica() {
     
     for (int i = 0; i < filas; ++i) {
         for (int j = 0; j < columnas; ++j) {
-            Pixel* p = *(matrizPixeles + i) + j;
-            if (p->r == 255) {
-                pixelesAnomalos++;
+            Pixel* p = matrizPixeles(i, j);
+            if (p != nullptr) {
+                if (p->r == 255) {
+                    pixelesAnomalos++;
+                }
             }
         }
     }

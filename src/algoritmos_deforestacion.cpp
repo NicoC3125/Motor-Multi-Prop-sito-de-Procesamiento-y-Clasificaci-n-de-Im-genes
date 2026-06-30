@@ -4,14 +4,15 @@
 void MotorImagen::convertirEscalaGrises() {
     for (int i = 0; i < filas; ++i) {
         for (int j = 0; j < columnas; ++j) {
-            Pixel* pixelActual = *(matrizPixeles + i) + j;
-            int promedio = pixelActual->getGris();
-            pixelActual->setGris(promedio);
+            Pixel* pixelActual = matrizPixeles(i, j);
+            if (pixelActual != nullptr) {
+                int promedio = pixelActual->getGris();
+                pixelActual->setGris(promedio);
+            }
         }
     }
 }
 
-// Función auxiliar de ordenamiento
 void ordenarArreglo(int arr[], int n) {
     for (int i = 0; i < n - 1; ++i) {
         int minIdx = i;
@@ -31,11 +32,15 @@ void MotorImagen::aplicarFiltroMediana() {
             int k = 0;
             for (int f = -1; f <= 1; ++f) {
                 for (int c = -1; c <= 1; ++c) {
-                    vecinos[k++] = (*(matrizPixeles + (i + f)) + (j + c))->r;
+                    Pixel* pVecino = matrizPixeles(i + f, j + c);
+                    vecinos[k++] = (pVecino != nullptr) ? pVecino->r : 0;
                 }
             }
             ordenarArreglo(vecinos, 9);
-            (*(matrizPixeles + i) + j)->setGris(vecinos[4]);
+            Pixel* pCentro = matrizPixeles(i, j);
+            if (pCentro != nullptr) {
+                pCentro->setGris(vecinos[4]);
+            }
         }
     }
 }
@@ -46,12 +51,14 @@ void MotorImagen::clasificarZonasDeforestadas() {
     
     for (int i = 0; i < filas; ++i) {
         for (int j = 0; j < columnas; ++j) {
-            Pixel* p = *(matrizPixeles + i) + j;
-            if (p->g > p->r && p->g > p->b) {
-                pixelesBosque++;
-            } else if (p->r > p->g && p->r > 50) { 
-                pixelesDeforestados++;
-                p->r = 255; p->g = 0; p->b = 0;
+            Pixel* p = matrizPixeles(i, j);
+            if (p != nullptr) {
+                if (p->g > p->r && p->g > p->b) {
+                    pixelesBosque++;
+                } else if (p->r > p->g && p->r > 50) { 
+                    pixelesDeforestados++;
+                    p->r = 255; p->g = 0; p->b = 0;
+                }
             }
         }
     }

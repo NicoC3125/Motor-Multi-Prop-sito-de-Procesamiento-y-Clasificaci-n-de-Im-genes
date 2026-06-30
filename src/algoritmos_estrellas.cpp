@@ -4,13 +4,14 @@
 void MotorImagen::aislarEstrellas(int brilloMinimo) {
     for (int i = 0; i < filas; ++i) {
         for (int j = 0; j < columnas; ++j) {
-            Pixel* p = *(matrizPixeles + i) + j;
-            int brillo = p->getGris();
-            
-            if (brillo > brilloMinimo) {
-                p->r = 255; p->g = 255; p->b = 0; // Amarillo para estrellas
-            } else {
-                p->r = 0; p->g = 0; p->b = 0;
+            Pixel* p = matrizPixeles(i, j);
+            if (p != nullptr) {
+                int brillo = p->getGris();
+                if (brillo > brilloMinimo) {
+                    p->r = 255; p->g = 255; p->b = 0; 
+                } else {
+                    p->r = 0; p->g = 0; p->b = 0;
+                }
             }
         }
     }
@@ -22,9 +23,11 @@ void MotorImagen::clasificarCumuloEstelar() {
     
     for (int i = 0; i < filas; ++i) {
         for (int j = 0; j < columnas; ++j) {
-            Pixel* p = *(matrizPixeles + i) + j;
-            if (p->r == 255 && p->g == 255) {
-                pixelesEstrella++;
+            Pixel* p = matrizPixeles(i, j);
+            if (p != nullptr) {
+                if (p->r == 255 && p->g == 255) {
+                    pixelesEstrella++;
+                }
             }
         }
     }
