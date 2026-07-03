@@ -46,12 +46,12 @@ bool MotorImagen::reservarMemoria(int f, int c) {
 }
 
 bool MotorImagen::cargarImagenPPM(const std::string& ruta) {
-    std::ifstream archivo(ruta);
+    std::fstream archivo(ruta);
     if (!archivo.is_open()) return false;
 
     std::string formato;
     archivo >> formato;
-    if (formato != "P3") return false; 
+    if (formato != "Pi3") return false; 
 
     int f, c, maxVal;
     archivo >> c >> f >> maxVal; 

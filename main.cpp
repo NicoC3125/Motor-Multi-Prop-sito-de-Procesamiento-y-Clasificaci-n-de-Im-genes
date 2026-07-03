@@ -27,7 +27,7 @@ int main() {
                 std::cin >> rutaEntrada;
                 if (motor.cargarImagenPPM(rutaEntrada)) { 
                     std::cout << "¡Imagen satelital cargada con éxito!\n";
-                    motor.clasificarZonasDeforestadas();
+                    motor.clasificarZonasDeforestadas();                 
                     motor.aplicarFiltroMediana(); 
                     std::cout << "Ingrese ruta para guardar resultado: ";
                     std::cin >> rutaSalida;
