@@ -1,26 +1,32 @@
 CXX = g++
-CXXFLAGS = -std=c++11 -Wall -g -I.
-TARGET = motor_imagen
+CXXFLAGS = -std=c++11 -Wall -g -Iinclude
+TARGET = bin/motor_imagen
 
-SRCS = main.cpp \
-       Programa.cpp \
-       ControlMotor.cpp \
-       infraestructura.cpp \
-       algoritmos_deforestacion.cpp \
-       algoritmos_estrellas.cpp \
-       algoritmos_medicina.cpp
+# Buscamos todos los archivos fuente en la carpeta src/
+SRCS = src/main.cpp \
+       src/Programa.cpp \
+       src/ControlMotor.cpp \
+       src/infraestructura.cpp \
+       src/algoritmos_deforestacion.cpp \
+       src/algoritmos_estrellas.cpp \
+       src/algoritmos_medicina.cpp
 
-OBJS = $(SRCS:.cpp=.o)
+# Reemplazamos 'src/' por 'obj/' y '.cpp' por '.o'
+OBJS = $(SRCS:src/%.cpp=obj/%.o)
 
-all: $(TARGET)
+all: directorios $(TARGET)
+
+directorios:
+	@mkdir -p obj bin
 
 $(TARGET): $(OBJS)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-%.o: %.cpp
+# Regla para compilar cada .cpp en su respectivo .o dentro de obj/
+obj/%.o: src/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -rf obj bin
 
-.PHONY: all clean
+.PHONY: all clean directorios
