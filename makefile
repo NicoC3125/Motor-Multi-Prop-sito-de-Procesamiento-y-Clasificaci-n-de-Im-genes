@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++11 -Wall -g -Iinclude
+CXXFLAGS = -std=c++14 -Wall -g -Iinclude
 TARGET = bin/motor_imagen.exe
 
 SRCS = src/main.cpp \
