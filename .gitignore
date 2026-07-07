@@ -1,7 +1,10 @@
-*.exe
+bin/
+obj/
 *.o
 *.out
-*.app
-*.log
-*.tmp
-imagenes/*.ppm
+*.exe
+.DS_Store
+*.dSYM/
+*.swp
+*.swo
+.vscode/
