@@ -1,0 +1,10 @@
+bin/
+obj/
+*.o
+*.out
+*.exe
+.DS_Store
+*.dSYM/
+*.swp
+*.swo
+.vscode/
