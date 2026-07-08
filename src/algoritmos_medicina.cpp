@@ -1,4 +1,6 @@
 #include "MotorImagen.h"
+#include <cstdio>
+#include <fstream>
 
 void MotorImagen::binarizarParaAnomalias(TI umbralMaximo) {
     for (TI i = 0; i < getFilas(); ++i) {
@@ -13,7 +15,7 @@ void MotorImagen::binarizarParaAnomalias(TI umbralMaximo) {
     }
 }
 
-void MotorImagen::clasificarAnomaliaMedica(ostream& os) {
+void MotorImagen::clasificarAnomaliaMedica() {
     TI pixelesAnomalos = 0;
     TI totalPixeles = getFilas() * getColumnas();
     
@@ -28,16 +30,31 @@ void MotorImagen::clasificarAnomaliaMedica(ostream& os) {
     TD areaEstimadaMm2 = pixelesAnomalos / 100.0;
     TD porcentajeOcupado = (totalPixeles > 0) ? ((TD)pixelesAnomalos / totalPixeles) * 100.0 : 0.0;
     
-    os << "\n=== REPORTE DEL MOTOR DE DIAGNOSTICO MEDICO ===\n"
-         << "Densidad de pixeles sospechosos: " << pixelesAnomalos << " px.\n"
-         << "Area estimada de la masa: " << areaEstimadaMm2 << " mm2.\n";
+    printf("\n=== REPORTE DEL MOTOR DE DIAGNOSTICO MEDICO ===\n");
+    printf("Densidad de pixeles sospechosos: %d px.\n", pixelesAnomalos);
+    printf("Area estimada de la masa: %.2f mm2.\n", areaEstimadaMm2);
     
     if (pixelesAnomalos == 0) {
-        os << "Resultado: [NEGATIVO] No se detectan masas anomalas.\n";
+        printf("Resultado: [NEGATIVO] No se detectan masas anomalas.\n");
     } else if (porcentajeOcupado > 0.0 && porcentajeOcupado <= 5.0) {
-        os << "Resultado: [PRECAUCION] Masa pequena detectada. Requiere observacion.\n";
+        printf("Resultado: [PRECAUCION] Masa pequena detectada. Requiere observacion.\n");
     } else {
-        os << "Resultado: [ALERTA CRITICA] Masa de gran tamano detectada (" 
-             << porcentajeOcupado << "% del tejido). Se sugiere biopsia prioritaria.\n";
+        printf("Resultado: [ALERTA CRITICA] Masa de gran tamano detectada (%.2f%% del tejido). Se sugiere biopsia prioritaria.\n", porcentajeOcupado);
+    }
+
+    ofstream reporte("reporte_medico.txt", ios::app);
+    if (reporte.is_open()) {
+        reporte << "\n=== REPORTE DEL MOTOR DE DIAGNOSTICO MEDICO ===\n"
+                << "Densidad de pixeles sospechosos: " << pixelesAnomalos << " px.\n"
+                << "Area estimada de la masa: " << areaEstimadaMm2 << " mm2.\n";
+        if (pixelesAnomalos == 0) {
+            reporte << "Resultado: [NEGATIVO] No se detectan masas anomalas.\n";
+        } else if (porcentajeOcupado > 0.0 && porcentajeOcupado <= 5.0) {
+            reporte << "Resultado: [PRECAUCION] Masa pequena detectada. Requiere observacion.\n";
+        } else {
+            reporte << "Resultado: [ALERTA CRITICA] Masa de gran tamano detectada (" 
+                    << porcentajeOcupado << "% del tejido). Se sugiere biopsia prioritaria.\n";
+        }
+        reporte.close();
     }
 }

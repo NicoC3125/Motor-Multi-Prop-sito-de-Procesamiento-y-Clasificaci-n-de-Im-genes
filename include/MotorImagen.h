@@ -27,11 +27,11 @@ public:
     TI getColumnas() const;
 
     void aplicarFiltroMediana();     
-    void clasificarZonasDeforestadas(ostream& os = cout);
+    void clasificarZonasDeforestadas();
     void aislarEstrellas(TI brilloMinimo);
-    void clasificarCumuloEstelar(ostream& os = cout);
+    void clasificarCumuloEstelar();
     void binarizarParaAnomalias(TI umbralMaximo);
-    void clasificarAnomaliaMedica(ostream& os = cout);
+    void clasificarAnomaliaMedica();
 };
 
 #endif

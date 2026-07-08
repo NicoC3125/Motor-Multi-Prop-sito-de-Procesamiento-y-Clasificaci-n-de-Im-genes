@@ -9,13 +9,13 @@ enum OpcionesMotor {
     MEDICINA
 };
 
-using ControladorMotor = void(*)(MotorImagen&, ostream&, istream&);
+using ControladorMotor = void(*)(MotorImagen&);
 
-void pausar(ostream& os, istream& is);
+void pausar();
 void limpiar();
 
-void procesarDeforestacion(MotorImagen& motor, ostream& os, istream& is);
-void procesarEstrellas(MotorImagen& motor, ostream& os, istream& is);
-void procesarMedicina(MotorImagen& motor, ostream& os, istream& is);
+void procesarDeforestacion(MotorImagen& motor);
+void procesarEstrellas(MotorImagen& motor);
+void procesarMedicina(MotorImagen& motor);
 
 #endif

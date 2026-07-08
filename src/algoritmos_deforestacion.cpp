@@ -1,5 +1,7 @@
 #include "MotorImagen.h"
 #include "Sorting.h"
+#include <cstdio>
+#include <fstream>
 
 void MotorImagen::aplicarFiltroMediana() {
     TU8 vecinos[9];
@@ -18,7 +20,7 @@ void MotorImagen::aplicarFiltroMediana() {
     }
 }
 
-void MotorImagen::clasificarZonasDeforestadas(ostream& os) {
+void MotorImagen::clasificarZonasDeforestadas() {
     TI pixelesBosque = 0;
     TI pixelesDeforestados = 0;
     
@@ -37,12 +39,24 @@ void MotorImagen::clasificarZonasDeforestadas(ostream& os) {
     TD totalImagen = getFilas() * getColumnas();
     TD porcentajeAlerta = (totalImagen > 0) ? ((TD)pixelesDeforestados / totalImagen) * 100.0 : 0.0;
     
-    os<< "--- REPORTE DE CLASIFICACION SATELITAL ---\n"
-         << "Zonas de Bosque Saludable: " << pixelesBosque << " px.\n"
-         << "Zonas con Alerta de Deforestacion: " << pixelesDeforestados << " px.\n"
-         << "Porcentaje de dano territorial: " << porcentajeAlerta << "%\n";
+    printf("--- REPORTE DE CLASIFICACION SATELITAL ---\n");
+    printf("Zonas de Bosque Saludable: %d px.\n", pixelesBosque);
+    printf("Zonas con Alerta de Deforestacion: %d px.\n", pixelesDeforestados);
+    printf("Porcentaje de dano territorial: %.2f%%\n", porcentajeAlerta);
     
     if(porcentajeAlerta > 15.0) {
-        os << "[ALERTA CRITICA]: Se sugiere intervencion en la zona.\n";
+        printf("[ALERTA CRITICA]: Se sugiere intervencion en la zona.\n");
+    }
+
+    ofstream reporte("reporte_satelital.txt", ios::app);
+    if (reporte.is_open()) {
+        reporte << "--- REPORTE DE CLASIFICACION SATELITAL ---\n"
+                << "Zonas de Bosque Saludable: " << pixelesBosque << " px.\n"
+                << "Zonas con Alerta de Deforestacion: " << pixelesDeforestados << " px.\n"
+                << "Porcentaje de dano territorial: " << porcentajeAlerta << "%\n";
+        if(porcentajeAlerta > 15.0) {
+            reporte << "[ALERTA CRITICA]: Se sugiere intervencion en la zona.\n";
+        }
+        reporte.close();
     }
 }

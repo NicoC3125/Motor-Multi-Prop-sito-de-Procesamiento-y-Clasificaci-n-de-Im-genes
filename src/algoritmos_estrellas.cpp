@@ -1,4 +1,6 @@
 #include "MotorImagen.h"
+#include <cstdio>
+#include <fstream>
 
 void MotorImagen::aislarEstrellas(TI brilloMinimo) {
     for (TI i = 0; i < getFilas(); ++i) {
@@ -14,7 +16,7 @@ void MotorImagen::aislarEstrellas(TI brilloMinimo) {
     }
 }
 
-void MotorImagen::clasificarCumuloEstelar(ostream& os) {
+void MotorImagen::clasificarCumuloEstelar() {
     TI pixelesEstrella = 0;
     TI totalPixeles = getFilas() * getColumnas();
     
@@ -28,15 +30,30 @@ void MotorImagen::clasificarCumuloEstelar(ostream& os) {
     
     TD densidadCalculada = (totalPixeles > 0) ? ((TD)pixelesEstrella / totalPixeles) * 100.0 : 0.0;
     
-    os << "\n=== ANALIZADOR ASTROFISICO DE IMAGENES ===\n"
-         << "Pixeles estelares detectados: " << pixelesEstrella << " px.\n"
-         << "Densidad estelar del cuadrante: " << densidadCalculada << "%\n";
+    printf("\n=== ANALIZADOR ASTROFISICO DE IMAGENES ===\n");
+    printf("Pixeles estelares detectados: %d px.\n", pixelesEstrella);
+    printf("Densidad estelar del cuadrante: %.2f%%\n", densidadCalculada);
     
     if (densidadCalculada < 0.5) {
-        os << "Clasificacion: [ESPACIO PROFUNDO VACIO] Poca presencia de cuerpos celestes.\n";
+        printf("Clasificacion: [ESPACIO PROFUNDO VACIO] Poca presencia de cuerpos celestes.\n");
     } else if (densidadCalculada >= 0.5 && densidadCalculada <= 3.0) {
-        os << "Clasificacion: [CUMULO ESTELAR ABIERTO] Grupo de estrellas dispersas.\n";
+        printf("Clasificacion: [CUMULO ESTELAR ABIERTO] Grupo de estrellas dispersas.\n");
     } else {
-        os << "Clasificacion: [NUCLEO GALACTICO / NEBULOSA DENSA] Alta concentracion estelar.\n";
+        printf("Clasificacion: [NUCLEO GALACTICO / NEBULOSA DENSA] Alta concentracion estelar.\n");
+    }
+
+    ofstream reporte("reporte_estrellas.txt", ios::app);
+    if (reporte.is_open()) {
+        reporte << "\n=== ANALIZADOR ASTROFISICO DE IMAGENES ===\n"
+                << "Pixeles estelares detectados: " << pixelesEstrella << " px.\n"
+                << "Densidad estelar del cuadrante: " << densidadCalculada << "%\n";
+        if (densidadCalculada < 0.5) {
+            reporte << "Clasificacion: [ESPACIO PROFUNDO VACIO] Poca presencia de cuerpos celestes.\n";
+        } else if (densidadCalculada >= 0.5 && densidadCalculada <= 3.0) {
+            reporte << "Clasificacion: [CUMULO ESTELAR ABIERTO] Grupo de estrellas dispersas.\n";
+        } else {
+            reporte << "Clasificacion: [NUCLEO GALACTICO / NEBULOSA DENSA] Alta concentracion estelar.\n";
+        }
+        reporte.close();
     }
 }

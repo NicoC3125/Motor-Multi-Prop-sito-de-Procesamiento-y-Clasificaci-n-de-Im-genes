@@ -1,75 +1,100 @@
 #include "ControlMotor.h"
+#include <cstdio>
+#include <cstdlib>
 
-void pausar(ostream& os, istream& is) {
-    os << "\nPresione ENTER para volver.";
-    is.ignore();
-    is.get();
+void pausar() {
+    printf("\nPresione ENTER para volver.");
+    while (getchar() != '\n'); 
+    getchar();
 }
 
 void limpiar() {
     system("clear || cls");
 }
 
-void procesarDeforestacion(MotorImagen& motor, ostream& os, istream& is) {
+void procesarDeforestacion(MotorImagen& motor) {
     limpiar();
+    char bufferEntrada[256], bufferSalida[256];
     TS rutaEntrada, rutaSalida;
-    os << "--- PROCESAMIENTO SATELITAL ---\n";
-    os << "Ingrese la ruta de la imagen PPM: ";
-    is >> rutaEntrada;
+    
+    printf("--- PROCESAMIENTO SATELITAL ---\n");
+    printf("Ingrese la ruta de la imagen PPM: ");
+    scanf("%255s", bufferEntrada);
+    rutaEntrada = bufferEntrada;
+
     if (motor.cargarImagenPPM(rutaEntrada)) { 
-        os << "Imagen satelital cargada con exito.\n";
+        printf("Imagen satelital cargada con exito.\n");
         motor.clasificarZonasDeforestadas();                 
         motor.aplicarFiltroMediana(); 
-        os << "Ingrese ruta para guardar resultado: ";
-        is >> rutaSalida;
+        
+        printf("Ingrese ruta para guardar resultado: ");
+        scanf("%255s", bufferSalida);
+        rutaSalida = bufferSalida;
         motor.guardarImagenPPM(rutaSalida); 
     } else {
-        os << "Error al cargar el archivo.\n";
+        printf("Error al cargar el archivo.\n");
     }
-    is.ignore();
-    pausar(os, is);
+    
+    while (getchar() != '\n'); 
+    pausar();
 }
 
-void procesarEstrellas(MotorImagen& motor, ostream& os, istream& is) {
+void procesarEstrellas(MotorImagen& motor) {
     limpiar();
+    char bufferEntrada[256], bufferSalida[256];
     TS rutaEntrada, rutaSalida;
-    os << "--- PROCESAMIENTO ASTRONOMICO ---\n";
-    os << "Ingrese la ruta de la imagen espacial PPM: ";
-    is >> rutaEntrada;
+    
+    printf("--- PROCESAMIENTO ASTRONOMICO ---\n");
+    printf("Ingrese la ruta de la imagen espacial PPM: ");
+    scanf("%255s", bufferEntrada);
+    rutaEntrada = bufferEntrada;
+
     if (motor.cargarImagenPPM(rutaEntrada)) {
         TI umbral;
-        os << "Ingrese umbral de brillo minimo para estrellas (0-255): ";
-        is >> umbral;
+        printf("Ingrese umbral de brillo minimo para estrellas (0-255): ");
+        scanf("%d", &umbral);
+        
         motor.aislarEstrellas(umbral);
         motor.clasificarCumuloEstelar();
-        os << "Ingrese ruta para guardar resultado: ";
-        is >> rutaSalida;
+        
+        printf("Ingrese ruta para guardar resultado: ");
+        scanf("%255s", bufferSalida);
+        rutaSalida = bufferSalida;
         motor.guardarImagenPPM(rutaSalida);
     } else {
-        os << "Error al cargar el archivo.\n";
+        printf("Error al cargar el archivo.\n");
     }
-    is.ignore();
-    pausar(os, is);
+    
+    while (getchar() != '\n'); 
+    pausar();
 }
 
-void procesarMedicina(MotorImagen& motor, ostream& os, istream& is) {
+void procesarMedicina(MotorImagen& motor) {
     limpiar();
+    char bufferEntrada[256], bufferSalida[256];
     TS rutaEntrada, rutaSalida;
-    os << "--- PROCESAMIENTO MEDICO ---\n";
-    os << "Ingrese la ruta de la radiografia PPM: ";
-    is >> rutaEntrada;
+    
+    printf("--- PROCESAMIENTO MEDICO ---\n");
+    printf("Ingrese la ruta de la radiografia PPM: ");
+    scanf("%255s", bufferEntrada);
+    rutaEntrada = bufferEntrada;
+
     if (motor.cargarImagenPPM(rutaEntrada)) {
         TI umbralMed;
-        os << "Ingrese umbral maximo para tejido denso (0-255): ";
-        is >> umbralMed;
+        printf("Ingrese umbral maximo para tejido denso (0-255): ");
+        scanf("%d", &umbralMed);
+        
         motor.binarizarParaAnomalias(umbralMed);
         motor.clasificarAnomaliaMedica();
-        os << "Ingrese ruta para guardar resultado: ";
-        is >> rutaSalida;
+        
+        printf("Ingrese ruta para guardar resultado: ");
+        scanf("%255s", bufferSalida);
+        rutaSalida = bufferSalida;
         motor.guardarImagenPPM(rutaSalida);
     } else {
-        os << "Error al cargar el archivo.\n";
+        printf("Error al cargar el archivo.\n");
     }
-    is.ignore();
-    pausar(os, is);
+    
+    while (getchar() != '\n');
+    pausar();
 }
