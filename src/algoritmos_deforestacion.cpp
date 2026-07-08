@@ -18,7 +18,7 @@ void MotorImagen::aplicarFiltroMediana() {
     }
 }
 
-void MotorImagen::clasificarZonasDeforestadas() {
+void MotorImagen::clasificarZonasDeforestadas(ostream& os) {
     TI pixelesBosque = 0;
     TI pixelesDeforestados = 0;
     
@@ -37,12 +37,12 @@ void MotorImagen::clasificarZonasDeforestadas() {
     TD totalImagen = getFilas() * getColumnas();
     TD porcentajeAlerta = (totalImagen > 0) ? ((TD)pixelesDeforestados / totalImagen) * 100.0 : 0.0;
     
-    cout << "--- REPORTE DE CLASIFICACION SATELITAL ---\n"
+    os<< "--- REPORTE DE CLASIFICACION SATELITAL ---\n"
          << "Zonas de Bosque Saludable: " << pixelesBosque << " px.\n"
          << "Zonas con Alerta de Deforestacion: " << pixelesDeforestados << " px.\n"
          << "Porcentaje de dano territorial: " << porcentajeAlerta << "%\n";
     
     if(porcentajeAlerta > 15.0) {
-        cout << "[ALERTA CRITICA]: Se sugiere intervencion en la zona.\n";
+        os << "[ALERTA CRITICA]: Se sugiere intervencion en la zona.\n";
     }
 }

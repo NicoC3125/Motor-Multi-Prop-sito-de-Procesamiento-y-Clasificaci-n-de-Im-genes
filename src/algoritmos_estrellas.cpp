@@ -14,7 +14,7 @@ void MotorImagen::aislarEstrellas(TI brilloMinimo) {
     }
 }
 
-void MotorImagen::clasificarCumuloEstelar() {
+void MotorImagen::clasificarCumuloEstelar(ostream& os) {
     TI pixelesEstrella = 0;
     TI totalPixeles = getFilas() * getColumnas();
     
@@ -28,15 +28,15 @@ void MotorImagen::clasificarCumuloEstelar() {
     
     TD densidadCalculada = (totalPixeles > 0) ? ((TD)pixelesEstrella / totalPixeles) * 100.0 : 0.0;
     
-    cout << "\n=== ANALIZADOR ASTROFISICO DE IMAGENES ===\n"
+    os << "\n=== ANALIZADOR ASTROFISICO DE IMAGENES ===\n"
          << "Pixeles estelares detectados: " << pixelesEstrella << " px.\n"
          << "Densidad estelar del cuadrante: " << densidadCalculada << "%\n";
     
     if (densidadCalculada < 0.5) {
-        cout << "Clasificacion: [ESPACIO PROFUNDO VACIO] Poca presencia de cuerpos celestes.\n";
+        os << "Clasificacion: [ESPACIO PROFUNDO VACIO] Poca presencia de cuerpos celestes.\n";
     } else if (densidadCalculada >= 0.5 && densidadCalculada <= 3.0) {
-        cout << "Clasificacion: [CUMULO ESTELAR ABIERTO] Grupo de estrellas dispersas.\n";
+        os << "Clasificacion: [CUMULO ESTELAR ABIERTO] Grupo de estrellas dispersas.\n";
     } else {
-        cout << "Clasificacion: [NUCLEO GALACTICO / NEBULOSA DENSA] Alta concentracion estelar.\n";
+        os << "Clasificacion: [NUCLEO GALACTICO / NEBULOSA DENSA] Alta concentracion estelar.\n";
     }
 }
